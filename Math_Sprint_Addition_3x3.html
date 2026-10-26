@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#101827">
+<title>Math Sprint — Speed & Accuracy</title>
+<style>
+:root{--bg:#0b1020;--panel:#141d30;--panel2:#1b2740;--text:#f3f6ff;--muted:#9ba9c4;--accent:#7c9cff;--good:#49d6a0;--bad:#ff6f85;--line:#2b3954}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#172747 0,#0b1020 58%);color:var(--text);font:16px/1.45 system-ui,-apple-system,Segoe UI,Roboto,sans-serif;min-height:100vh}
+button,input,select{font:inherit}button{cursor:pointer;border:0;border-radius:12px;padding:11px 15px;font-weight:700;transition:transform .12s,opacity .12s}button:active{transform:scale(.98)}button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #a9bcff;outline-offset:2px}
+.primary{background:var(--accent);color:#081124}.secondary{background:#283653;color:var(--text);border:1px solid #3a4a68}.quiet{background:transparent;color:var(--muted);border:1px solid var(--line)}.danger{background:#512638;color:#ffdbe2}
+.wrap{max-width:1050px;margin:auto;padding:22px 16px 44px}.top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:20px}.brand{display:flex;align-items:center;gap:12px}.logo{width:44px;height:44px;border-radius:14px;background:linear-gradient(135deg,#8ba7ff,#62e1c0);display:grid;place-items:center;color:#101827;font-size:24px;font-weight:900}.brand h1{font-size:20px;margin:0}.brand p{margin:2px 0 0;color:var(--muted);font-size:13px}.pill{border:1px solid var(--line);border-radius:999px;padding:7px 11px;color:var(--muted);font-size:12px}
+.grid{display:grid;grid-template-columns:310px minmax(0,1fr);gap:18px;align-items:start}.card{background:rgba(20,29,48,.94);border:1px solid var(--line);border-radius:20px;padding:20px;box-shadow:0 16px 45px #0002}.card h2{margin:0 0 15px;font-size:17px}.field{margin:0 0 15px}.field label{display:block;font-size:13px;color:var(--muted);margin-bottom:7px}.field select,.field input[type=number]{width:100%;background:#0e1729;color:var(--text);border:1px solid #34425e;border-radius:10px;padding:10px}.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}.check{display:flex;gap:8px;align-items:center;background:#0e1729;border:1px solid #2c3a55;border-radius:10px;padding:9px;font-size:13px}.check input{accent-color:var(--accent)}.range-row{display:flex;justify-content:space-between;color:var(--muted);font-size:13px;margin-bottom:7px}.field input[type=range]{width:100%;accent-color:var(--accent)}.wide{width:100%}.hint{font-size:12px;color:var(--muted);margin-top:10px}
+main{min-width:0}.stats{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:15px}.stat{padding:13px 14px;background:#101a2c;border:1px solid var(--line);border-radius:14px}.stat span{display:block;color:var(--muted);font-size:12px}.stat strong{display:block;font-size:22px;margin-top:2px;font-variant-numeric:tabular-nums}.progress{height:6px;border-radius:99px;background:#283653;overflow:hidden;margin:4px 0 17px}.progress div{height:100%;width:0;background:linear-gradient(90deg,var(--accent),var(--good));transition:width .2s}
+.playcard{min-height:385px;display:flex;flex-direction:column;align-items:center;text-align:center;justify-content:center;position:relative;overflow:hidden}.eyebrow{color:var(--muted);text-transform:uppercase;letter-spacing:1.6px;font-size:11px;font-weight:800}.question{font-size:clamp(42px,8vw,72px);font-weight:850;letter-spacing:-2px;margin:18px 0 20px;font-variant-numeric:tabular-nums}.answer{width:min(360px,100%);padding:15px 16px;border-radius:14px;border:2px solid #354563;background:#0b1425;color:var(--text);text-align:center;font-size:26px;font-weight:750}.answer:focus{border-color:var(--accent);outline:none}.options{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;width:min(460px,100%);margin-top:13px}.option{font-size:20px;background:#1c2a44;color:var(--text);border:1px solid #394a69;padding:14px}.option.correct{background:#124d40;border-color:var(--good)}.option.wrong{background:#592437;border-color:var(--bad)}.feedback{height:27px;margin:12px 0 0;font-weight:700}.feedback.good{color:var(--good)}.feedback.bad{color:var(--bad)}.controls{display:flex;gap:9px;flex-wrap:wrap;justify-content:center;margin-top:12px}.startscreen p{max-width:390px;color:var(--muted)}.startscreen .bigicon{font-size:45px;margin-bottom:10px}.small{font-size:12px;color:var(--muted)}.hidden{display:none!important}
+.review-list{display:grid;gap:8px;margin-top:15px}.review-item{display:grid;grid-template-columns:1fr auto;gap:10px;background:#0e1729;border:1px solid var(--line);padding:11px;border-radius:11px;font-size:13px}.review-item .wrongans{color:var(--bad)}.review-item .rightans{color:var(--good)}.review-head{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}.review-scroll{max-height:330px;overflow:auto}.endgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.endstat{padding:15px;background:#0e1729;border:1px solid var(--line);border-radius:13px}.endstat strong{font-size:25px;display:block}.endstat span{color:var(--muted);font-size:12px}.barrow{display:grid;grid-template-columns:90px 1fr 45px;align-items:center;gap:10px;margin:10px 0;font-size:13px}.bar{height:8px;background:#293750;border-radius:99px;overflow:hidden}.bar i{display:block;height:100%;background:var(--accent)}footer{text-align:center;color:#75839d;font-size:12px;margin-top:18px}.toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#263753;padding:10px 15px;border-radius:12px;box-shadow:0 8px 30px #0005;z-index:10}
+@media(max-width:760px){.grid{grid-template-columns:1fr}.settings{order:2}.stats{grid-template-columns:repeat(2,1fr)}.playcard{min-height:360px}.top{align-items:flex-start}.pill{max-width:130px;text-align:center}.card{padding:16px}.endgrid{grid-template-columns:1fr 1fr}.endstat:last-child{grid-column:span 2}}
+@media(max-width:390px){.question{font-size:42px}.options{gap:7px}.option{padding:12px 7px}.stat strong{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="wrap">
+<header class="top"><div class="brand"><div class="logo">∑</div><div><h1>Math Sprint</h1><p>Train your speed. Keep your accuracy.</p></div></div><div class="pill">Offline-ready · One HTML file</div></header>
+<div class="grid">
+<aside class="card settings" id="settings">
+<h2>⚙️ Practice settings</h2>
+<div class="field"><label for="mode">Question style</label><select id="mode"><option value="choice">Multiple choice</option><option value="type">Type the answer</option></select></div>
+<div class="field"><label>Operations</label><div class="checks">
+<label class="check"><input type="checkbox" value="mul" checked> Multiplication</label>
+<label class="check"><input type="checkbox" value="add"> Addition</label>
+<label class="check"><input type="checkbox" value="sub"> Subtraction</label>
+<label class="check"><input type="checkbox" value="div"> Division</label>
+</div></div>
+<div class="field"><label>Multiplication sizes</label><div class="checks">
+<label class="check"><input type="checkbox" value="m11" checked> 1 digit × 1 digit</label>
+<label class="check"><input type="checkbox" value="m21" checked> 2 digit × 1 digit</label>
+<label class="check"><input type="checkbox" value="m31" checked> 3 digit × 1 digit</label>
+<label class="check"><input type="checkbox" value="m22"> 2 digit × 2 digit</label>
+</div></div>
+<div class="field"><label>Addition sizes</label><div class="checks">
+<label class="check"><input type="checkbox" value="a11"> 1 digit + 1 digit</label>
+<label class="check"><input type="checkbox" value="a22" checked> 2 digit + 2 digit</label>
+<label class="check"><input type="checkbox" value="a32" checked> 3 digit + 2 digit</label>
+<label class="check"><input type="checkbox" value="a33" checked> 3 digit + 3 digit</label>
+</div></div>
+<div class="field"><label for="duration">Session length</label><select id="duration"><option value="20">20 questions</option><option value="30" selected>30 questions</option><option value="50">50 questions</option><option value="100">100 questions</option><option value="timed">60-second sprint</option></select></div>
+<div class="field"><div class="range-row"><label for="difficulty">Number range</label><strong id="diffLabel">Balanced</strong></div><input id="difficulty" type="range" min="1" max="3" value="2"><div class="range-row"><span>Easy</span><span>Balanced</span><span>Challenge</span></div></div>
+<div class="field"><label for="seconds">Time per question (typed mode)</label><select id="seconds"><option value="0">No limit</option><option value="5">5 seconds</option><option value="10" selected>10 seconds</option><option value="15">15 seconds</option></select></div>
+<div class="field"><label class="check"><input id="sound" type="checkbox" checked> Sound effects</label></div>
+<button class="primary wide" id="start">Start practice →</button>
+<p class="hint">Shortcuts: <b>1–4</b> choose an option · <b>Enter</b> submit · <b>Esc</b> pause/resume.</p>
+</aside>
+<main>
+<div class="stats">
+<div class="stat"><span>Correct</span><strong id="correctStat">0</strong></div><div class="stat"><span>Accuracy</span><strong id="accuracyStat">—</strong></div><div class="stat"><span>Avg. answer</span><strong id="avgStat">—</strong></div><div class="stat"><span>Time left / progress</span><strong id="timeStat">—</strong></div>
+</div>
+<div class="progress"><div id="progressBar"></div></div>
+<section class="card playcard" id="playcard">
+<div class="startscreen" id="welcome"><div class="bigicon">🧠</div><div class="eyebrow">Your next personal best</div><h2 style="font-size:25px;margin:8px 0">Make calculation automatic.</h2><p>Practise multiplication, addition, subtraction and division. Start with paper if needed, then gradually challenge yourself to calculate mentally.</p><button class="primary" id="start2">Start a session</button></div>
+<div id="questionArea" class="hidden" style="width:100%">
+<div class="eyebrow" id="qMeta">QUESTION 1</div><div class="question" id="question">7 × 8</div>
+<form id="answerForm" autocomplete="off"><input id="answer" class="answer" inputmode="numeric" autocomplete="off" placeholder="Your answer" aria-label="Your answer"><div class="controls"><button type="submit" class="primary" id="submit">Check answer ↵</button><button type="button" class="quiet" id="skip">Skip</button></div></form>
+<div id="options" class="options hidden"></div><div class="feedback" id="feedback" aria-live="polite"></div>
+<div class="small" id="timerHint">Focus on correct answers first; speed follows.</div>
+</div>
+<div id="paused" class="hidden"><div class="bigicon">⏸️</div><h2>Session paused</h2><p class="small">Take a breath. Resume when you're ready.</p><button class="primary" id="resume">Resume</button></div>
+<div id="results" class="hidden" style="width:100%;text-align:left">
+<div class="eyebrow">SESSION COMPLETE</div><h2 style="font-size:27px;margin:6px 0 17px">Your results</h2><div class="endgrid">
+<div class="endstat"><strong id="endAcc">0%</strong><span>Accuracy</span></div><div class="endstat"><strong id="endAvg">0s</strong><span>Average time</span></div><div class="endstat"><strong id="endScore">0/0</strong><span>Correct answers</span></div>
+</div><div style="margin-top:19px"><b>Performance by operation</b><div id="operationBars"></div></div>
+<div class="review-head" style="margin-top:22px"><b>Answer review</b><span class="small" id="reviewCount"></span></div><div class="review-scroll"><div class="review-list" id="reviewList"></div></div>
+<div class="controls" style="margin-top:18px"><button class="primary" id="again">Practice again ↻</button><button class="secondary" id="download">Download review CSV</button></div>
+</div>
+</section>
+</main>
+</div>
+<footer>Built for deliberate practice · Your results stay in this browser session.</footer>
+</div>
+<script>
+(()=> {
+const $=id=>document.getElementById(id);
+const state={active:false,paused:false,questions:[],index:0,results:[],startedAt:0,qStarted:0,remaining:0,timer:null,qTimer:null,sessionLimit:30,deadline:null,pausedAt:0,elapsedBeforePause:0};
+const opNames={mul:"Multiplication",add:"Addition",sub:"Subtraction",div:"Division"};
+let audioCtx=null;
+function beep(kind="good"){if(!$("sound").checked)return;try{audioCtx=audioCtx||new(window.AudioContext||window.webkitAudioContext)();let o=audioCtx.createOscillator(),g=audioCtx.createGain();o.connect(g);g.connect(audioCtx.destination);o.type="sine";o.frequency.value=kind==="good"?720:kind==="bad"?190:480;g.gain.setValueAtTime(.08,audioCtx.currentTime);g.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+.14);o.start();o.stop(audioCtx.currentTime+.15)}catch(e){}}
+function selectedOps(){return [...document.querySelectorAll('.checks input[type=checkbox]:checked')].map(x=>x.value).filter(v=>["mul","add","sub","div"].includes(v))}
+function rand(a,b){return Math.floor(Math.random()*(b-a+1))+a}
+function makeQ(){
+ const ops=selectedOps(); if(!ops.length) return null;
+ let op=ops[rand(0,ops.length-1)],a,b,expr,ans,d=+$("difficulty").value;
+ if(op==="mul"){
+  const sizes=[...document.querySelectorAll('input[value="m11"]:checked, input[value="m21"]:checked, input[value="m31"]:checked, input[value="m22"]:checked')].map(x=>x.value);if(!sizes.length)return null;
+  const size=sizes[rand(0,sizes.length-1)];
+  if(size==="m11"){a=rand(2,9);b=rand(2,9)}
+  if(size==="m21"){a=rand(d===1?10:11,d===3?99:49);b=rand(2,d===1?6:9)}
+  if(size==="m31"){a=rand(d===1?100:101,d===3?999:499);b=rand(2,d===1?5:9)}
+  if(size==="m22"){a=rand(12,d===1?29:99);b=rand(11,d===1?29:99)}
+  expr=`${a} × ${b}`;ans=a*b;
+ } else if(op==="add"){
+  const addSizes=[...document.querySelectorAll('input[value="a11"]:checked, input[value="a22"]:checked, input[value="a32"]:checked, input[value="a33"]:checked')].map(x=>x.value);
+  if(!addSizes.length)return null;
+  const size=addSizes[rand(0,addSizes.length-1)];
+  if(size==="a11"){a=rand(1,9);b=rand(1,9)}
+  if(size==="a22"){a=rand(10,99);b=rand(10,99)}
+  if(size==="a32"){a=rand(100,999);b=rand(10,99)}
+  if(size==="a33"){a=rand(100,999);b=rand(100,999)}
+  expr=`${a} + ${b}`;ans=a+b;
+ } else if(op==="sub"){
+  let max=d===1?99:d===2?999:9999;a=rand(10,max);b=rand(1,a);expr=`${a} − ${b}`;ans=a-b;
+ } else {
+  b=rand(2,d===1?9:12);ans=rand(2,d===1?12:d===2?40:100);a=b*ans;expr=`${a} ÷ ${b}`;
+ }
+ return {op,expr,answer:ans};
+}
+function fmt(n){return Number(n).toLocaleString("en-IN")}
+function setStats(){
+ const done=state.results,correct=done.filter(r=>r.correct).length,avg=done.length?done.reduce((s,r)=>s+r.ms,0)/done.length/1000:0;
+ $("correctStat").textContent=correct;$("accuracyStat").textContent=done.length?Math.round(correct/done.length*100)+"%":"—";$("avgStat").textContent=done.length?avg.toFixed(1)+"s":"—";
+ let total=state.sessionLimit==="timed"?Math.max(0,Math.ceil(state.remaining)):`${state.index}/${state.sessionLimit}`;$("timeStat").textContent=total;
+ $("progressBar").style.width=(state.sessionLimit==="timed"?Math.min(100,(state.results.length/Math.max(1,state.results.length+1))*100):Math.min(100,state.index/state.sessionLimit*100))+"%";
+}
+function start(){
+ const ops=selectedOps(),sizes=[...document.querySelectorAll('input[value="m11"]:checked, input[value="m21"]:checked, input[value="m31"]:checked, input[value="m22"]:checked')],addSizes=[...document.querySelectorAll('input[value="a11"]:checked, input[value="a22"]:checked, input[value="a32"]:checked, input[value="a33"]:checked')];if(!ops.length){toast("Select at least one operation.");return}if(ops.includes("mul")&&!sizes.length){toast("Select a multiplication size.");return}if(ops.includes("add")&&!addSizes.length){toast("Select an addition size.");return}
+ clearInterval(state.timer);clearInterval(state.qTimer);state.active=true;state.paused=false;state.results=[];state.index=0;state.questions=[];state.sessionLimit=$("duration").value==="timed"?"timed":+$("duration").value;state.remaining=60;state.startedAt=Date.now();state.elapsedBeforePause=0;
+ if(state.sessionLimit!=="timed")for(let i=0;i<state.sessionLimit;i++)state.questions.push(makeQ());
+ $("welcome").classList.add("hidden");$("results").classList.add("hidden");$("paused").classList.add("hidden");$("questionArea").classList.remove("hidden");$("settings").style.opacity=".96";
+ if(state.sessionLimit==="timed")state.timer=setInterval(()=>{if(!state.active||state.paused)return;state.remaining-=.1;if(state.remaining<=0){state.remaining=0;finish();return}setStats()},100);
+ showQuestion();
+}
+function showQuestion(){
+ clearInterval(state.qTimer);if(!state.active)return;
+ if(state.sessionLimit!=="timed"&&state.index>=state.questions.length){finish();return}
+ let q=state.sessionLimit==="timed"?makeQ():state.questions[state.index];if(!q || !Number.isFinite(q.answer) || !q.expr){toast("Question generation issue. Please check your settings.");finish();return}
+ state.current=q;state.qStarted=Date.now();$("question").textContent=q.expr;$("qMeta").textContent=state.sessionLimit==="timed"?`SPRINT · ${state.results.length+1}`:`QUESTION ${state.index+1} OF ${state.sessionLimit}`;
+ $("feedback").textContent="";$("feedback").className="feedback";$("answer").value="";$("answer").classList.remove("hidden");$("options").innerHTML="";$("options").classList.add("hidden");
+ const typed=$("mode").value==="type";$("answer").classList.toggle("hidden",!typed);$("submit").classList.toggle("hidden",!typed);$("skip").classList.remove("hidden");
+ if(!typed){$("options").classList.remove("hidden");let choices=new Set([q.answer]);let attempts=0;while(choices.size<4&&attempts++<100){let delta=rand(1,Math.max(5,Math.ceil(Math.abs(q.answer)*.22)));let v=Math.random()<.5?q.answer+delta:q.answer-delta;if(v>=0&&v!==q.answer)choices.add(v)}while(choices.size<4)choices.add(q.answer+choices.size+rand(1,8));[...choices].sort(()=>Math.random()-.5).forEach((v,i)=>{let b=document.createElement("button");b.type="button";b.className="option";b.textContent=fmt(v);b.dataset.value=v;b.addEventListener("click",()=>submitAnswer(v));$("options").appendChild(b)})}
+ const limit=+$("seconds").value;$("timerHint").textContent=limit?`Target: answer within ${limit} seconds. Accuracy first!`:"No question timer · focus on accuracy.";
+ if(typed&&limit>0){let left=limit;$("timerHint").textContent=`${left}s remaining`;state.qTimer=setInterval(()=>{if(state.paused||!state.active)return;left-=.1;$("timerHint").textContent=`${Math.max(0,left).toFixed(1)}s remaining`;if(left<=0){clearInterval(state.qTimer);submitAnswer(null,true)}},100)}
+ setStats();if(typed)$("answer").focus();
+}
+function submitAnswer(value,timeout=false){
+ if(!state.active||state.paused||state.locked)return;
+ let q=state.current;if(value===undefined)value=$("answer").value.trim();
+ if(value===""||value===null){if(!timeout&&value==="")return}
+ state.locked=true;setTimeout(()=>state.locked=false,450);clearInterval(state.qTimer);
+ const ms=Date.now()-state.qStarted,correct=!timeout&&Number(value)===q.answer;
+ state.results.push({expr:q.expr,op:q.op,answer:q.answer,given:timeout?"Timed out":value===""?"Skipped":value,correct,ms});
+ if(correct){beep("good");$("feedback").textContent="Correct! Keep it going."; $("feedback").className="feedback good"}else{beep("bad");$("feedback").textContent=timeout?"Time is up — answer: "+fmt(q.answer):value===""||value===null?"Skipped — answer: "+fmt(q.answer):"Not quite — answer: "+fmt(q.answer);$("feedback").className="feedback bad"}
+ if(state.sessionLimit!=="timed")state.index++;
+ [...$("options").children].forEach(b=>{b.disabled=true;if(Number(b.dataset.value)===q.answer)b.classList.add("correct");else if(Number(b.dataset.value)===Number(value))b.classList.add("wrong")});
+ setStats();setTimeout(()=>{if(state.active&&!state.paused){state.locked=false;showQuestion()}},650);
+}
+function pause(){if(!state.active)return;state.paused=!state.paused;if(state.paused){$("questionArea").classList.add("hidden");$("paused").classList.remove("hidden");clearInterval(state.qTimer)}else{$("paused").classList.add("hidden");$("questionArea").classList.remove("hidden");state.qStarted=Date.now();showQuestion()}}
+function finish(){
+ if(!state.active)return;state.active=false;state.paused=false;clearInterval(state.timer);clearInterval(state.qTimer);
+ $("questionArea").classList.add("hidden");$("paused").classList.add("hidden");$("results").classList.remove("hidden");
+ const r=state.results,c=r.filter(x=>x.correct).length,acc=r.length?Math.round(c/r.length*100):0,avg=r.length?r.reduce((s,x)=>s+x.ms,0)/r.length/1000:0;
+ $("endAcc").textContent=acc+"%";$("endAvg").textContent=avg.toFixed(1)+"s";$("endScore").textContent=`${c}/${r.length}`;$("reviewCount").textContent=`${r.length} questions`;
+ let counts={};r.forEach(x=>{counts[x.op]??={total:0,correct:0};counts[x.op].total++;if(x.correct)counts[x.op].correct++});
+ $("operationBars").innerHTML=Object.entries(counts).map(([op,v])=>`<div class="barrow"><span>${opNames[op]}</span><div class="bar"><i style="width:${Math.round(v.correct/v.total*100)}%"></i></div><b>${Math.round(v.correct/v.total*100)}%</b></div>`).join("")||"<p class='small'>No answers recorded.</p>";
+ $("reviewList").innerHTML=r.map((x,i)=>`<div class="review-item"><div><b>${i+1}. ${escapeHtml(x.expr)}</b><div class="small">Your answer: <span class="${x.correct?'rightans':'wrongans'}">${escapeHtml(String(x.given))}</span> · ${x.ms/1000<10?(x.ms/1000).toFixed(1):Math.round(x.ms/1000)}s</div></div><div class="${x.correct?'rightans':'wrongans'}" style="font-weight:800">${x.correct?"✓ "+fmt(x.answer):"→ "+fmt(x.answer)}</div></div>`).join("");
+ setStats();if(acc>=80)confetti();
+}
+function escapeHtml(s){return s.replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]))}
+function confetti(){for(let i=0;i<55;i++){let e=document.createElement("i");e.style.cssText=`position:fixed;z-index:20;left:${Math.random()*100}vw;top:-15px;width:7px;height:12px;background:hsl(${Math.random()*360},85%,65%);transform:rotate(${Math.random()*360}deg);pointer-events:none;`;document.body.appendChild(e);let dx=(Math.random()-.5)*200,dy=window.innerHeight+30;e.animate([{transform:"translate(0,0) rotate(0)",opacity:1},{transform:`translate(${dx}px,${dy}px) rotate(${Math.random()*800}deg)`,opacity:0}],{duration:1400+Math.random()*900,easing:"ease-out"}).onfinish=()=>e.remove()}}
+function toast(s){let t=document.createElement("div");t.className="toast";t.textContent=s;document.body.appendChild(t);setTimeout(()=>t.remove(),2200)}
+$("start").onclick=start;$("start2").onclick=start;$("again").onclick=start;$("resume").onclick=pause;$("skip").onclick=()=>submitAnswer("",false);
+$("answerForm").addEventListener("submit",e=>{e.preventDefault();submitAnswer()});
+$("difficulty").addEventListener("input",()=>{$("diffLabel").textContent=["Easy","Balanced","Challenge"][$("difficulty").value-1]});
+$("download").onclick=()=>{let rows=[["Question","Operation","Your answer","Correct answer","Correct","Time seconds"],...state.results.map(r=>[r.expr,opNames[r.op],r.given,r.answer,r.correct?"Yes":"No",(r.ms/1000).toFixed(2)])];let csv=rows.map(row=>row.map(v=>`"${String(v).replace(/"/g,'""')}"`).join(",")).join("\r\n");let a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="math-sprint-review.csv";a.click();URL.revokeObjectURL(a.href)};
+document.addEventListener("keydown",e=>{if(e.key==="Escape"&&state.active){pause();return}if(!state.active||state.paused)return;if($("mode").value==="choice"&&["1","2","3","4"].includes(e.key)){let b=$("options").children[Number(e.key)-1];if(b&&!b.disabled)b.click()}});
+})();
+</script>
+</body>
+</html>
